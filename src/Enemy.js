@@ -29,7 +29,7 @@ export default class Enemy{
     draw(ctx, pause, pacman){
         this.#setPacmanPosition(pacman); // Lấy vị trí của pacman
         if(!pause){ // Nếu game không bị tạm dừng
-            if(this.#detectPacman() && !pacman.powerDotActive){ // Nếu phát hiện pacman và pacman không ăn được ghost
+            if(!pacman.powerDotActive){ // Nếu phát hiện pacman và pacman không ăn được ghost
                 this.#setDirectionAstar(); // Set hướng di chuyển theo A*
                 this.#moveAstar(); // Di chuyển theo A*
             }
@@ -177,46 +177,46 @@ export default class Enemy{
         this.image = this.normalGhost;
     }
 
-    // Phát hiện pacman
-    #detectPacman(){
-        let indexX = Math.floor(this.x/this.tileSize); // Lấy vị trí x của ghost
-        let indexY = Math.floor(this.y/this.tileSize); // Lấy vị trí y của ghost
-        let pacmanIndexX = Math.floor(this.pacmanX/this.tileSize); // Lấy vị trí x của pacman
-        let pacmanIndexY = Math.floor(this.pacmanY/this.tileSize); // Lấy vị trí y của pacman
-        if( (indexX == pacmanIndexX && this.#noWallInColumnBetween(indexX, indexY,pacmanIndexY)) || (indexY == pacmanIndexY && this.#noWallInRowBetween(indexY, indexX, pacmanIndexX)) ){
-            // Nếu ghost và pacman cùng hàng hoặc cùng cột và không có tường giữa
-            this.chaseAstarTimer = this.chaseAstarTimerDefault; // Set thời gian chạy A*
-            return true;
-        }
-        if(this.chaseAstarTimer > 0){ // Nếu thời gian chạy A* còn lớn hơn 0
-            this.chaseAstarTimer--; // Giảm thời gian chạy A*
-            return true;
-        }
-        return false;
-    }
+    // // Phát hiện pacman
+    // #detectPacman(){
+    //     let indexX = Math.floor(this.x/this.tileSize); // Lấy vị trí x của ghost
+    //     let indexY = Math.floor(this.y/this.tileSize); // Lấy vị trí y của ghost
+    //     let pacmanIndexX = Math.floor(this.pacmanX/this.tileSize); // Lấy vị trí x của pacman
+    //     let pacmanIndexY = Math.floor(this.pacmanY/this.tileSize); // Lấy vị trí y của pacman
+    //     if( (indexX == pacmanIndexX && this.#noWallInColumnBetween(indexX, indexY,pacmanIndexY)) || (indexY == pacmanIndexY && this.#noWallInRowBetween(indexY, indexX, pacmanIndexX)) ){
+    //         // Nếu ghost và pacman cùng hàng hoặc cùng cột và không có tường giữa
+    //         this.chaseAstarTimer = this.chaseAstarTimerDefault; // Set thời gian chạy A*
+    //         return true;
+    //     }
+    //     if(this.chaseAstarTimer > 0){ // Nếu thời gian chạy A* còn lớn hơn 0
+    //         this.chaseAstarTimer--; // Giảm thời gian chạy A*
+    //         return true;
+    //     }
+    //     return false;
+    // }
     
-    // Kiểm tra cột có tường giữa ghost và pacman không
-    #noWallInColumnBetween(collumnIndex, indexY, pacmanIndexY){
+    // // Kiểm tra cột có tường giữa ghost và pacman không
+    // #noWallInColumnBetween(collumnIndex, indexY, pacmanIndexY){
 
-        const [start, end] = indexY < pacmanIndexY ? [indexY, pacmanIndexY] : [pacmanIndexY, indexY];
+    //     const [start, end] = indexY < pacmanIndexY ? [indexY, pacmanIndexY] : [pacmanIndexY, indexY];
 
-        for(let row = start + 1; row < end; row++){
-            if(this.tileMap.map[row][collumnIndex] == 1){
-                return false;
-            }
-        }
-        return true;
-    }
+    //     for(let row = start + 1; row < end; row++){
+    //         if(this.tileMap.map[row][collumnIndex] == 1){
+    //             return false;
+    //         }
+    //     }
+    //     return true;
+    // }
 
-    // Kiểm tra hàng có tường giữa ghost và pacman không
-    #noWallInRowBetween(rowIndex, indexX, pacmanIndexX){
-        const [start, end] = indexX < pacmanIndexX ? [indexX, pacmanIndexX] : [pacmanIndexX, indexX];
-        for(let collumn = start + 1; collumn < end; collumn++){
-            if(this.tileMap.map[rowIndex][collumn] == 1){
-                return false;
-            }
-        }
-        return true;
-    }
+    // // Kiểm tra hàng có tường giữa ghost và pacman không
+    // #noWallInRowBetween(rowIndex, indexX, pacmanIndexX){
+    //     const [start, end] = indexX < pacmanIndexX ? [indexX, pacmanIndexX] : [pacmanIndexX, indexX];
+    //     for(let collumn = start + 1; collumn < end; collumn++){
+    //         if(this.tileMap.map[rowIndex][collumn] == 1){
+    //             return false;
+    //         }
+    //     }
+    //     return true;
+    // }
     
 }

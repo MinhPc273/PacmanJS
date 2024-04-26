@@ -10,6 +10,7 @@ let pacman = tileMap.getPacman(velocity); // Lấy pacman từ tileMap
 let enemies = tileMap.getEnemies(velocity); // Lấy danh sách ghost từ tileMap
 let gameOver = false; // Biến kiểm tra game over
 let gameWin = false; // Biến kiểm tra game win
+let gamePause = false; // Biến kiểm tra game có đang tạm dừng không
 const gameOverSound = new Audio("../sounds/gameOver.wav"); // Âm thanh game over
 const gameWinSound = new Audio("../sounds/gameWin.wav"); // Âm thanh game win
 
@@ -31,6 +32,19 @@ canvas.addEventListener("click", ()=>{
         resetGame();
     }
 });
+
+const buttonPauseGame = document.getElementById("pause-game"); // Lấy button pause từ HTML
+buttonPauseGame.addEventListener("click", () => {
+    if(gamePause){
+        buttonPauseGame.innerHTML = "Pause";
+        gamePause = false;
+    }
+    else{
+        buttonPauseGame.innerHTML = "Resume";
+        gamePause = true;
+    }
+}); // Sự kiện click vào button pause{}
+
 
 // Hàm vẽ game over hoặc game win
 function drawGameEnd(){
@@ -98,7 +112,7 @@ function isGameOver(){
 
 // Hàm kiểm tra xem game có đang tạm dừng không
 function pause(){
-    return !pacman.madeFirstMove || gameOver || gameWin;
+    return !pacman.madeFirstMove || gameOver || gameWin || gamePause;
 }
 
 // Set kích thước canvas
