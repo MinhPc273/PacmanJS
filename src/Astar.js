@@ -2,6 +2,7 @@ import MovingDirection from "./MovingDirection.js";
 
 // File thuật toán A*
 
+//MinhPc 
 
 // Node quản lý vị trí của từng ô trong game
 class Node {
